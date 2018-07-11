@@ -8,7 +8,7 @@ const movieData = loadJSON.sync(path.join(__dirname, '..', 'data', 'tmdb.json'))
 let ndJSON = '';
 
 for (const key of Object.keys(movieData)) {
-	ndJSON += JSON.stringify({doc: movieData[key]}) + EOL;
+	ndJSON += JSON.stringify(movieData[key]) + EOL;
 }
 
 fs.writeFileSync(path.join(__dirname, '..', 'data', 'tmdb.ndjson'), ndJSON);

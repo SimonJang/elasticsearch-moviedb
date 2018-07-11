@@ -5,7 +5,7 @@ import * as uuid from 'uuid/v4';
 import * as got from 'got';
 import {host, port, index} from '../../environment';
 
-const createHeader = () => ({create: {_index: index, _type: 'doc', _id: uuid().split('-').join('')}});
+const createHeader = () => ({create: {_index: index, _type: 'movie', _id: uuid().split('-').join('')}});
 
 (async () => {
 	const dump = fs.readFileSync(path.join(__dirname, '..', '..', 'data', 'tmdb.ndjson')).toString();
@@ -14,8 +14,6 @@ const createHeader = () => ({create: {_index: index, _type: 'doc', _id: uuid().s
 		.filter(record => record.trim())
 		.map(record => `${JSON.stringify(createHeader())}${EOL}${record}`)
 		.join(EOL);
-
-	fs.writeFileSync(path.join(__dirname, 'test.txt'), body);
 
 	try {
 		await got.post(`${host}:${port}/${index}/_bulk`, {headers: {'content-type': 'application/x-ndjson'}, body});
